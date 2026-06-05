@@ -1,12 +1,8 @@
 // components/Footer.jsx
 import Link from "next/link";
-import {
-  BookOpen,
-  Mail,
-  Phone,
-  MapPin
-} from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import Logo from "./Logo";
+
 const socialLinks = [
   {
     href: "#",
@@ -93,10 +89,10 @@ const socialLinks = [
 const Footer = () => {
   return (
     <footer className="bg-slate-900 text-slate-400">
-      {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Brand column */}
+      {/* Main Footer */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
+          {/* Brand */}
           <div className="space-y-5">
             <Logo dark />
 
@@ -104,17 +100,37 @@ const Footer = () => {
               Your go-to platform for booking distraction-free study spaces.
               Learn smarter, stay focused, and achieve more.
             </p>
-            {/* Social icons */}
-            <div className="flex items-center gap-3 pt-1">
+
+            <div className="flex flex-wrap items-center gap-3 pt-1">
               {socialLinks.map(({ href, label, svg }) => (
                 <Link
                   key={label}
                   href={href}
+                  aria-label={label}
                   className="w-9 h-9 rounded-lg bg-slate-800 hover:bg-blue-600 text-slate-400 hover:text-white flex items-center justify-center transition-colors duration-200"
                 >
                   {svg}
                 </Link>
               ))}
+            </div>
+
+            {/* Newsletter */}
+            <div className="pt-3">
+              <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">
+                Newsletter
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input
+                  type="email"
+                  placeholder="your@email.com"
+                  className="w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500"
+                />
+
+                <button className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+                  Join
+                </button>
+              </div>
             </div>
           </div>
 
@@ -123,42 +139,12 @@ const Footer = () => {
             <h4 className="text-sm font-semibold text-white uppercase tracking-widest">
               Quick Links
             </h4>
+
             <ul className="space-y-3">
               {[
                 { label: "Home", href: "/" },
                 { label: "All Rooms", href: "/all_rooms" },
-                { label: "My Bookings", href: "/my_bookings" },
-                { label: "About Us", href: "/about" },
-                { label: "Contact", href: "/contact" },
-              ].map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-sm hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-slate-600 group-hover:bg-blue-400 transition-colors" />
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Room Types */}
-          <div className="space-y-5">
-            <h4 className="text-sm font-semibold text-white uppercase tracking-widest">
-              Room Types
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { label: "Silent Zones", href: "/all_rooms?type=silent" },
-                { label: "Group Study Halls", href: "/all_rooms?type=group" },
-                { label: "Private Cabins", href: "/all_rooms?type=private" },
-                {
-                  label: "Conference Rooms",
-                  href: "/all_rooms?type=conference",
-                },
-                { label: "Open Study Areas", href: "/all_rooms?type=open" },
+                { label: "About Us", href: "#" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -178,62 +164,52 @@ const Footer = () => {
             <h4 className="text-sm font-semibold text-white uppercase tracking-widest">
               Contact Us
             </h4>
+
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
-                <span className="text-sm leading-relaxed">
+
+                <span className="text-sm leading-relaxed break-words">
                   123 Study Lane, Academic Block,
                   <br />
                   Chattagram, Bangladesh
                 </span>
               </li>
+
               <li className="flex items-center gap-3">
                 <Phone className="w-4 h-4 text-blue-400 shrink-0" />
+
                 <a
-                  href="tel:+8801700000000"
+                  href="tel:+8801852483885"
                   className="text-sm hover:text-blue-400 transition-colors"
                 >
                   +880 1852483885
                 </a>
               </li>
+
               <li className="flex items-center gap-3">
                 <Mail className="w-4 h-4 text-blue-400 shrink-0" />
+
                 <a
-                  href="mailto:pritomshiro@gmail.com"
-                  className="text-sm hover:text-blue-400 transition-colors"
+                  href="mailto:hello@studynook.com"
+                  className="text-sm hover:text-blue-400 transition-colors break-all"
                 >
                   hello@studynook.com
                 </a>
               </li>
             </ul>
-
-            {/* Newsletter */}
-            <div className="pt-2">
-              <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">
-                Newsletter
-              </p>
-              <div className="flex gap-2">
-                <input
-                  type="email"
-                  placeholder="your@email.com"
-                  className="flex-1 bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
-                />
-                <button className="bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors shrink-0">
-                  Join
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
+      {/* Bottom Bar */}
       <div className="border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500 text-center md:text-left">
             © {new Date().getFullYear()} StudyNook. All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6">
             {["Privacy Policy", "Terms of Service", "Cookie Policy"].map(
               (item) => (
                 <Link
