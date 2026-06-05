@@ -5,14 +5,49 @@ import Image from "next/image";
 import Link from "next/link";
 import { User, Mail, Lock, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
-import { signUp, authClient } from "@/lib/auth-client"; // ✅ FIX: authClient import
+import { signUp, authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+// ✅ Password validation function
+function validatePassword(password) {
+  const errors = [];
+  if (password.length < 6) errors.push("At least 6 characters");
+  if (!/[A-Z]/.test(password)) errors.push("At least one uppercase letter");
+  if (!/[a-z]/.test(password)) errors.push("At least one lowercase letter");
+  return errors;
+}
 
 export default function Register() {
   const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [passwordErrors, setPasswordErrors] = useState([]);
+  const [touched, setTouched] = useState(false);
+
+  const handlePasswordChange = (e) => {
+    const val = e.target.value;
+    setPassword(val);
+    if (touched) {
+      setPasswordErrors(validatePassword(val));
+    }
+  };
+
+  const handlePasswordBlur = () => {
+    setTouched(true);
+    setPasswordErrors(validatePassword(password));
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
+    // ✅ Submit এর আগে validate করো
+    const errors = validatePassword(password);
+    if (errors.length > 0) {
+      setTouched(true);
+      setPasswordErrors(errors);
+      return;
+    }
+
     const formData = new FormData(e.currentTarget);
     const registerData = Object.fromEntries(formData.entries());
 
@@ -24,20 +59,20 @@ export default function Register() {
       toast.error("Registration failed. Please try again.");
       return;
     }
-        await authClient.signOut({
-          fetchOptions: {
-            onSuccess: () => {
-              toast.success("Account created! Please login.");
-              router.push("/login");
-              router.refresh();
-            },
-          },
-        });
+
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          toast.success("Account created! Please login.");
+          router.push("/login");
+          router.refresh();
+        },
+      },
+    });
   };
 
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
-      // ✅ FIX: authClient এখন defined
       provider: "google",
       callbackURL: "/login",
     });
@@ -48,10 +83,8 @@ export default function Register() {
       <div className="grow flex items-center justify-center p-6">
         <div className="w-full max-w-md">
           <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-2xl space-y-8 relative overflow-hidden">
-            {/* Decoration — এটা আলাদা, content এর বাইরে */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16 blur-3xl pointer-events-none" />
 
-            {/* Header */}
             <div className="text-center space-y-2">
               <h2 className="text-3xl font-black text-slate-900 tracking-tight">
                 Join <span className="text-blue-600">StudyNook</span>
@@ -61,7 +94,6 @@ export default function Register() {
               </p>
             </div>
 
-            {/* Google button */}
             <div className="space-y-4">
               <Button
                 onPress={handleGoogleLogin}
@@ -79,7 +111,6 @@ export default function Register() {
               </Button>
             </div>
 
-            {/* Divider */}
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <span className="w-full border-t border-slate-100" />
@@ -91,7 +122,6 @@ export default function Register() {
               </div>
             </div>
 
-            {/* Form */}
             <form className="space-y-6" onSubmit={handleRegister}>
               <div className="space-y-2">
                 <label
@@ -105,7 +135,6 @@ export default function Register() {
                   required
                   placeholder="Enter your name"
                   name="name"
-                  startContent={<User className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
                 />
               </div>
@@ -123,7 +152,6 @@ export default function Register() {
                   placeholder="Enter your email"
                   type="email"
                   name="email"
-                  startContent={<Mail className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
                 />
               </div>
@@ -140,7 +168,6 @@ export default function Register() {
                   placeholder="https://images.unsplash.com/..."
                   type="url"
                   name="image"
-                  startContent={<User className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
                 />
               </div>
@@ -158,9 +185,37 @@ export default function Register() {
                   placeholder="••••••••"
                   type="password"
                   name="password"
-                  startContent={<Lock className="w-5 h-5 text-slate-400" />}
-                  className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  onBlur={handlePasswordBlur}
+                  // ✅ error থাকলে red border
+                  className={`border-2 ${
+                    touched && passwordErrors.length > 0
+                      ? "border-red-400 focus-within:border-red-500"
+                      : "border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600"
+                  } transition-all duration-300 h-14 bg-white w-full rounded-2xl`}
                 />
+                {/* ✅ Inline error messages */}
+                {touched && passwordErrors.length > 0 && (
+                  <ul className="space-y-1 mt-1">
+                    {passwordErrors.map((err, i) => (
+                      <li
+                        key={i}
+                        className="text-xs text-red-500 font-medium flex items-center gap-1 ml-1"
+                      >
+                        <span>✗</span> {err}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {/* ✅ সব ঠিক থাকলে green message */}
+                {touched &&
+                  passwordErrors.length === 0 &&
+                  password.length > 0 && (
+                    <p className="text-xs text-green-500 font-medium ml-1">
+                      ✓ Password looks good!
+                    </p>
+                  )}
               </div>
 
               <Button
@@ -173,7 +228,6 @@ export default function Register() {
               </Button>
             </form>
 
-            {/* Footer link */}
             <div className="text-center pt-2">
               <p className="text-sm text-slate-500 font-medium">
                 Already have an account?{" "}
