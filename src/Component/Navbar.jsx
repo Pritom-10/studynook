@@ -43,7 +43,7 @@ export function MainNavbar() {
             <Logo />
           </div>
 
-          {/* Desktop nav links */}
+        
           <div className="hidden md:flex gap-8 items-center">
             <Link href="/" className="font-medium text-slate-700 hover:text-blue-600 transition-colors">
               Home
@@ -92,7 +92,7 @@ export function MainNavbar() {
                     className="w-10 h-10 rounded-full object-cover ring-2 ring-blue-600/10"
                   />
                   <div className="text-left hidden lg:block">
-                    <p className="text-sm font-bold truncate max-w-[100px]">
+                    <p className="text-sm font-bold truncate max-w-25">
                       {session?.user?.name}
                     </p>
                     <p className="text-[10px] text-slate-500">Student</p>

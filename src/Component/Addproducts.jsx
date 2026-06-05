@@ -1,5 +1,3 @@
-
-
 import { Button, Input, TextArea } from "@heroui/react";
 
 import { BookPlus, Image as ImageIcon, DollarSign, Clock } from "lucide-react";
@@ -9,10 +7,10 @@ import { addCourse } from "@/lib/rooms/action";
 const CATEGORIES = [
   "Whiteboard",
   "Projector",
-  "Wifi",
-  "Business",
-  "Marketing",
-  "Personal Development",
+  "WiFi",
+  "TV Screen",
+  "AC",
+  "Coffee Machine",
 ];
 
 const Addproducts = () => {
@@ -24,7 +22,7 @@ const Addproducts = () => {
             <BookPlus className="w-8 h-8" />
           </div>
           <h1 className="text-4xl font-black text-slate-900">
-            Create New{" "}
+            Create New
             <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-600 to-blue-800">
               Room
             </span>
@@ -34,7 +32,6 @@ const Addproducts = () => {
           </p>
         </div>
 
-        {/* ✅ FIX: form এ action={addCourse} যোগ করা হয়েছে */}
         <form action={addCourse} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="md:col-span-2 space-y-2">
@@ -139,7 +136,6 @@ const Addproducts = () => {
               />
             </div>
 
-            {/* ✅ FIX: Category checkboxes <Select> এর বাইরে আনা হয়েছে */}
             <div className="md:col-span-2 space-y-3">
               <label className="text-sm font-bold text-slate-700 ml-1">
                 Amenities

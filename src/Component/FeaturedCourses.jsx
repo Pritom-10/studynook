@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 
 import FeaturedCard from "./FeaturedCard";
 import { fetchFeaturedCoursess } from "@/lib/rooms/data";
+import Link from "next/link";
 
 
 const FeaturedCourses = async () => {
@@ -18,21 +19,24 @@ const FeaturedCourses = async () => {
               Top Rated
             </h2>
             <h3 className="text-4xl font-extrabold text-slate-900">
-              Featured Courses
+              Featured Rooms
             </h3>
             <p className="text-slate-500 max-w-xl">
-              Handpicked premium courses designed to help you master the most
-              in-demand skills in the industry today.
+              Simplify your learning experience with StudyNook. Store notes,
+              plan tasks, and monitor your progress effortlessly. Stay organized
+              and make the most of your study time.
             </p>
           </div>
-          <Button
-            variant="flat"
-            color="primary"
-            className="rounded-full font-bold group"
-          >
-            View All Courses
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
+          <Link href="/all_rooms">
+            <Button
+              variant="flat"
+              color="primary"
+              className="rounded-full font-bold group"
+            >
+              View All Rooms
+              <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </Link>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

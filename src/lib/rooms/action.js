@@ -2,8 +2,11 @@
 
 import { headers } from "next/headers";
 import { auth } from "../auth";
+import { redirect } from "next/navigation";
 
 export const addCourse = async (formData) => {
+  
+  
   const { token } = await auth.api.getToken({
     headers: await headers(),
   });
@@ -11,20 +14,20 @@ export const addCourse = async (formData) => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
+  
   const modifiedData = {
-    name: formData.get("name"),
-    description: formData.get("description"),
-    image: formData.get("image"),
-    floor: formData.get("floor"),
-    hourlyRate: formData.get("price"),
-    seatCapacity: formData.get("Capacity"),
-    amenities: formData.getAll("amenities"),
-    userId: session?.user?.id,
-    userName: session?.user?.name,
-    userEmail: session?.user?.email,
+      name: formData.get("name"),
+      description: formData.get("description"),
+      image: formData.get("image"),
+      floor: formData.get("floor"),
+      hourlyRate: formData.get("price"),
+      seatCapacity: formData.get("Capacity"),
+      amenities: formData.getAll("amenities"),
+      userId: session?.user?.id,
+      userName: session?.user?.name,
+      userEmail: session?.user?.email,
   };
- 
+
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/all_rooms`, {
     method: "POST",
@@ -37,6 +40,9 @@ export const addCourse = async (formData) => {
 
   if (!res.ok) return null;
   const data = await res.json();
+   if (data?.insertedId) {
+     redirect("/listing");
+   }
   return data;
 };
 

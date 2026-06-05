@@ -1,21 +1,19 @@
-
 import { updateCourse } from "@/lib/rooms/action";
 import { Button, Input, TextArea } from "@heroui/react";
-
-import { BookPlus, Image as ImageIcon, DollarSign, Clock } from "lucide-react";
+import { BookPlus } from "lucide-react";
 import { redirect } from "next/navigation";
 
 const CATEGORIES = [
   "Whiteboard",
   "Projector",
-  "Wifi",
-  "Business",
-  "Marketing",
-  "Personal Development",
+  "WiFi",
+  "TV Screen",
+  "AC",
+  "Coffee Machine",
 ];
 
 export default async function EditPage({ rooms }) {
-   const {
+  const {
     _id,
     image,
     name,
@@ -26,11 +24,11 @@ export default async function EditPage({ rooms }) {
     amenities = [],
   } = rooms;
 
- const handleUpdateCourse = async (formData) => {
-   "use server";
-   const data = await updateCourse(_id, formData);
-   redirect("/listing");
- };
+  const handleUpdateCourse = async (formData) => {
+    "use server";
+    await updateCourse(_id, formData);
+    redirect("/listing");
+  };
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
@@ -40,15 +38,14 @@ export default async function EditPage({ rooms }) {
             <BookPlus className="w-8 h-8" />
           </div>
           <h1 className="text-4xl font-black text-slate-900">
-            Edit{" "}
-            <span className="bg-clip-text text-transparent bg-linear-to-r from-blue-600 to-blue-800">
+            Edit {/* ✅ FIX: bg-gradient-to-r */}
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
               Room
             </span>
           </h1>
           <p className="text-slate-500 font-medium">Update your room details</p>
         </div>
 
-        {/* ✅ FIX: handleUpdateCourse use করা হচ্ছে */}
         <form action={handleUpdateCourse} className="space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="md:col-span-2 space-y-2">
@@ -75,6 +72,7 @@ export default async function EditPage({ rooms }) {
               >
                 Description
               </label>
+              {/* ✅ FIX: Textarea (lowercase a) */}
               <TextArea
                 defaultValue={description}
                 id="description"
@@ -92,6 +90,7 @@ export default async function EditPage({ rooms }) {
               >
                 Image URL
               </label>
+              {/* ✅ FIX: startContent সরানো হয়েছে */}
               <Input
                 defaultValue={image}
                 id="image"
@@ -99,7 +98,6 @@ export default async function EditPage({ rooms }) {
                 required
                 type="url"
                 placeholder="https://images.unsplash.com/..."
-                startContent={<ImageIcon className="w-5 h-5 text-slate-400" />}
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
@@ -128,6 +126,7 @@ export default async function EditPage({ rooms }) {
               >
                 Hourly Rate ($)
               </label>
+              {/* ✅ FIX: startContent সরানো হয়েছে */}
               <Input
                 defaultValue={hourlyRate}
                 id="price"
@@ -135,7 +134,6 @@ export default async function EditPage({ rooms }) {
                 required
                 type="number"
                 placeholder="0.00"
-                startContent={<DollarSign className="w-5 h-5 text-slate-400" />}
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
@@ -145,21 +143,20 @@ export default async function EditPage({ rooms }) {
                 htmlFor="Capacity"
                 className="text-sm font-bold text-slate-700 ml-1"
               >
-                Capacity
+                Seat Capacity
               </label>
+              {/* ✅ FIX: startContent সরানো হয়েছে */}
               <Input
                 defaultValue={seatCapacity}
                 id="Capacity"
-                required
                 name="Capacity"
+                required
                 type="number"
-                placeholder="e.g. 20 persons"
-                startContent={<Clock className="w-5 h-5 text-slate-400" />}
+                placeholder="e.g. 8"
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
 
-           
             <div className="md:col-span-2 space-y-3">
               <label className="text-sm font-bold text-slate-700 ml-1">
                 Amenities

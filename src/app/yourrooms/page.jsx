@@ -63,14 +63,14 @@ export default async function DashboardPage() {
         </div>
 
         <div className="w-full md:w-3/4">
-          <h1 className="text-3xl font-bold mb-6">My Enrolled Courses</h1>
+          <h1 className="text-3xl font-bold mb-6">My Booking Rooms</h1>
 
           {enrollments?.length === 0 ? (
             <div className="p-12 text-center bg-slate-50 border rounded-2xl">
-              <p className="mb-4">No courses yet</p>
+              <p className="mb-4">No rooms booked yet</p>
 
               <Link href="/all_rooms">
-                <Button>Browse Courses</Button>
+                <Button>Browse Rooms</Button>
               </Link>
             </div>
           ) : (
@@ -139,7 +139,7 @@ export default async function DashboardPage() {
 const NotFound = () => {
   return (
     <div className="p-12 text-center bg-slate-50 border rounded-2xl">
-      <p className="mb-4">No courses yet</p>
+      <p className="mb-4">No rooms booked yet</p>
 
       <Link href="/all_rooms">
         <Button>Browse Courses</Button>
