@@ -22,7 +22,7 @@ export default async function DashboardPage() {
 
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/add-room/${session?.user?.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/bookings/${session?.user?.id}`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,15 +31,15 @@ export default async function DashboardPage() {
     },
   );
 
-  console.log("STATUS:", res.status);
+ 
 
   const text = await res.text();
 
-  let enrollments = [];
+  let bookings = [];
 
   try {
     const parsed = JSON.parse(text);
-    enrollments = Array.isArray(parsed) ? parsed : [];
+    bookings = Array.isArray(parsed) ? parsed : [];
   } catch (error) {
     console.log("JSON Parse Error");
   }
@@ -65,7 +65,7 @@ export default async function DashboardPage() {
         <div className="w-full md:w-3/4">
           <h1 className="text-3xl font-bold mb-6">My Booking Rooms</h1>
 
-          {enrollments?.length === 0 ? (
+          {bookings?.length === 0 ? (
             <div className="p-12 text-center bg-slate-50 border rounded-2xl">
               <p className="mb-4">No rooms booked yet</p>
 
@@ -75,14 +75,14 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-4">
-              {enrollments?.map((enrollment) => (
+              {bookings?.map((booking) => (
                 <div
-                  key={enrollment?._id}
+                  key={booking?._id}
                   className="flex gap-4 p-4 bg-white border rounded-xl"
                 >
                   <Image
                     src={
-                      enrollment?.roomImage ||
+                      booking?.roomImage ||
                       "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=400"
                     }
                     alt="room"
@@ -92,10 +92,10 @@ export default async function DashboardPage() {
                   />
                   <div className="flex flex-col grow justify-between">
                     <div>
-                      <h3 className="font-bold">{enrollment?.roomName}</h3>
+                      <h3 className="font-bold">{booking?.roomName}</h3>
                       <p className="text-sm text-slate-500">
-                        {enrollment?.bookingDate
-                          ? new Date(enrollment.bookingDate).toLocaleDateString(
+                        {booking?.bookingDate
+                          ? new Date(booking.bookingDate).toLocaleDateString(
                               "en-US",
                               {
                                 year: "numeric",
@@ -109,19 +109,19 @@ export default async function DashboardPage() {
                     <div className="flex justify-between items-center">
                       <Chip
                         color={
-                          enrollment?.status === "cancelled"
+                          booking?.status === "cancelled"
                             ? "danger"
                             : "success"
                         }
                         size="sm"
                       >
-                        {enrollment?.status === "cancelled"
+                        {booking?.status === "cancelled"
                           ? "Cancelled"
                           : "Active"}
                       </Chip>
-                      {enrollment?.status !== "cancelled" && (
+                      {booking?.status !== "cancelled" && (
                         <CancelBookingButton
-                          bookingId={enrollment?._id?.toString()}
+                          bookingId={booking?._id?.toString()}
                         />
                       )}
                     </div>
@@ -142,7 +142,7 @@ const NotFound = () => {
       <p className="mb-4">No rooms booked yet</p>
 
       <Link href="/all_rooms">
-        <Button>Browse Courses</Button>
+        <Button>Browse Rooms</Button>
       </Link>
     </div>
   );

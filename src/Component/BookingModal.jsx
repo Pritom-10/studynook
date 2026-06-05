@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import { Button, Input } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { authClient, useSession } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 
@@ -30,6 +31,7 @@ const parseRate = (rate) => {
 
 export default function BookingModal({ course, onClose }) {
   const { data: session } = useSession();
+  const router = useRouter();
 
   const today = new Date().toISOString().split("T")[0];
 
@@ -57,6 +59,7 @@ export default function BookingModal({ course, onClose }) {
   }, [startTime, endTime, hourlyRate]);
 
   const handleBook = async () => {
+ 
     if (!bookingDate || !startTime || !endTime) {
       toast.error("Please fill in all required fields.");
       return;
@@ -87,6 +90,8 @@ export default function BookingModal({ course, onClose }) {
         totalCost,
         specialNote,
       };
+         console.log("Session user id:", session?.user?.id);
+         console.log("Payload:", payload);
 
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/bookings`, {
         method: "POST",
@@ -108,7 +113,9 @@ export default function BookingModal({ course, onClose }) {
 
       toast.success("Room booked successfully!");
       onClose();
+      router.push("/yourrooms");
     } catch (err) {
+        console.error(err);
       toast.error("Something went wrong.");
     } finally {
       setLoading(false);
