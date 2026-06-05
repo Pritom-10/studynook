@@ -1,14 +1,21 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "http",
-        hostname: "**",
+        protocol: "https",
+        hostname: "images.unsplash.com",
       },
       {
         protocol: "https",
-        hostname: "**",
+        hostname: "upload.wikimedia.org",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com", // Google profile image এর জন্য
+      },
+      {
+        protocol: "https",
+        hostname: "**", // সব https domain allow — development এর জন্য সহজ
       },
     ],
   },

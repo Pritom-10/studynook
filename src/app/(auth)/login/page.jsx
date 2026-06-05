@@ -1,23 +1,19 @@
 "use client";
 
 import { Button, Input } from "@heroui/react";
-
 import Link from "next/link";
-
 import { Mail, Lock, ArrowRight } from "lucide-react";
-
 import Image from "next/image";
 import { authClient, signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation"; // ✅ FIX: import যোগ
 
 export default function Login() {
+  const router = useRouter(); // ✅ FIX: initialize
+
   const handleLogin = async (e) => {
     e.preventDefault();
-    
-
     const formData = new FormData(e.currentTarget);
-    
-
     const loginData = Object.fromEntries(formData.entries());
 
     const { data, error } = await signIn.email({
@@ -26,22 +22,26 @@ export default function Login() {
     });
 
     if (error) {
-      toast.error("Registration failed");
+      toast.error("Login failed. Check your email and password."); // ✅ FIX
       return;
     }
-    
+
+    toast.success("Welcome back!");
+    router.push("/"); // ✅ FIX: redirect
   };
+
   const handleGoogleLogin = async () => {
     await authClient.signIn.social({
       provider: "google",
+      callbackURL: "/",
     });
   };
+
   return (
     <div className="min-h-[80vh] flex flex-col bg-slate-50">
       <div className="flex items-center justify-center p-4">
         <div className="w-full max-w-md">
           <div className="bg-white p-10 rounded-[2.5rem] border border-slate-200 shadow-2xl space-y-8 relative overflow-hidden">
-            {/* Decorative element */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
 
             <div className="text-center space-y-2 relative">
@@ -95,7 +95,7 @@ export default function Login() {
                   placeholder="Enter your email"
                   type="email"
                   name="email"
-                  startcontent={<Mail className="w-5 h-5 text-slate-400" />}
+                  startContent={<Mail className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
                 />
               </div>
@@ -113,10 +113,11 @@ export default function Login() {
                   placeholder="••••••••"
                   type="password"
                   name="password"
-                  startcontent={<Lock className="w-5 h-5 text-slate-400" />}
+                  startContent={<Lock className="w-5 h-5 text-slate-400" />}
                   className="border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 transition-all duration-300 h-14 bg-white w-full rounded-2xl"
                 />
               </div>
+
               <div className="flex justify-end">
                 <Link
                   href="#"
@@ -125,6 +126,7 @@ export default function Login() {
                   Forgot password?
                 </Link>
               </div>
+
               <Button
                 color="primary"
                 type="submit"
@@ -137,7 +139,7 @@ export default function Login() {
 
             <div className="text-center pt-2">
               <p className="text-sm text-slate-500 font-medium">
-                New to CourseHub?{" "}
+                New to StudyHook?{" "}
                 <Link
                   href="/register"
                   className="text-blue-600 font-black hover:underline underline-offset-4 transition-all"

@@ -2,7 +2,6 @@ import { addCourse } from "@/lib/rooms/action";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 
-
 import {
   Button,
   Input,
@@ -37,33 +36,22 @@ const CATEGORIES = [
 ];
 
 export default async function AddCoursePage() {
-const handleAddCourse = async (formData) => {
-  "use server";
+  const handleAddCourse = async (formData) => {
+    "use server";
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  if (!session?.user) {
-    throw new Error("Unauthorized");
-  }
+    if (!session?.user) throw new Error("Unauthorized");
 
-  const payload = {
-    name: formData.get("name"),
-    description: formData.get("description"),
-    image: formData.get("image"),
-    floor: formData.get("floor"),
-    price: formData.get("price"),
-    Capacity: formData.get("Capacity"),
-    category: formData.getAll("category"),
+    // ✅ সরাসরি formData পাঠাও — action.js বানাবে
+    const data = await addCourse(formData);
+
+    if (data?.insertedId) {
+      redirect("/listing");
+    }
   };
-
-  const data = await addCourse(payload);
-
-  if (data?.insertedId) {
-    redirect("/listing");
-  }
-};
 
   return (
     <div className="max-w-4xl mx-auto px-4 py-16">
@@ -130,7 +118,7 @@ const handleAddCourse = async (formData) => {
                 required
                 type="url"
                 placeholder="https://images.unsplash.com/..."
-                startcontent={<ImageIcon className="w-5 h-5 text-slate-400" />}
+                startContent={<ImageIcon className="w-5 h-5 text-slate-400" />}
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
@@ -152,37 +140,12 @@ const handleAddCourse = async (formData) => {
                 />
               </div>
               <Select
-                id="category"
-                name="category"
+                id="amenities"
+                name="amenities"
                 required
                 placeholder="Select a category"
                 className="w-full"
               >
-                {/* <SelectTrigger className="h-14 border-2 border-slate-200 hover:border-blue-600/50 data-[focus-within=true]:border-blue-600 rounded-2xl bg-white transition-all duration-300 flex items-center px-4 shadow-none outline-none group">
-                  <div className="flex items-center gap-3 w-full">
-                    <List className="w-5 h-5 text-slate-400 group-data-[focus-within=true]:text-blue-600 transition-colors" />
-                    <SelectValue className="font-medium text-slate-600" />
-                  </div>
-                  <SelectIndicator className="ml-auto">
-                    <div className="text-slate-400 group-data-[focus-within=true]:text-blue-600 transition-colors">
-                      <List className="w-4 h-4" />
-                    </div>
-                  </SelectIndicator>
-                </SelectTrigger> */}
-
-                {/* <SelectPopover className="bg-white border border-slate-200 shadow-2xl rounded-2xl p-2 mt-2">
-                  <ListBox>
-                    {CATEGORIES.map((cat) => (
-                      <ListBoxItem
-                        key={cat}
-                        id={cat}
-                        className="px-4 py-2 text-slate-600 hover:bg-blue-50 hover:text-blue-600 rounded-xl cursor-pointer transition-colors font-medium"
-                      >
-                        {cat}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </SelectPopover> */}
                 <div className="space-y-3">
                   <label className="text-sm font-bold text-slate-700 ml-1">
                     Categories
@@ -196,7 +159,7 @@ const handleAddCourse = async (formData) => {
                       >
                         <input
                           type="checkbox"
-                          name="category"
+                          name="amenities"
                           value={cat}
                           className="w-5 h-5 accent-blue-600"
                         />
@@ -224,7 +187,7 @@ const handleAddCourse = async (formData) => {
                 required
                 type="number"
                 placeholder="0.00"
-                startcontent={<DollarSign className="w-5 h-5 text-slate-400" />}
+                startContent={<DollarSign className="w-5 h-5 text-slate-400" />}
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
@@ -242,7 +205,7 @@ const handleAddCourse = async (formData) => {
                 name="Capacity"
                 type="text"
                 placeholder="e.g. 12h 30m"
-                startcontent={<Clock className="w-5 h-5 text-slate-400" />}
+                startContent={<Clock className="w-5 h-5 text-slate-400" />}
                 className="w-full h-14 border-2 border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600 rounded-2xl bg-white transition-all duration-300 shadow-none"
               />
             </div>
@@ -262,7 +225,7 @@ const handleAddCourse = async (formData) => {
               size="lg"
               className="flex-2 font-black rounded-2xl h-14 shadow-xl shadow-blue-600/20"
             >
-              Publish Course
+              Publish Room
             </Button>
           </div>
         </form>

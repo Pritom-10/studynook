@@ -8,24 +8,24 @@ const db = client.db("studyhookdb");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
-    
     client,
   }),
   emailAndPassword: {
     enabled: true,
+    autoSignIn: false,
   },
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_SECRET,
-    }
+    },
   },
   session: {
     cookieCache: {
       enabled: true,
       strategy: "jwt",
-      maxAge: 5 * 24 * 60 * 60
-    }
+      maxAge: 5 * 24 * 60 * 60,
+    },
   },
   plugins: [jwt()],
 });

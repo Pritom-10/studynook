@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { AlertDialog, Button } from "@heroui/react";
+import { Button } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
@@ -9,12 +9,11 @@ import toast from "react-hot-toast";
 const CancelBookingButton = ({ bookingId }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleCancel = async () => {
     setLoading(true);
     try {
-      // ✅ token নাও
       const { data: jwtData } = await authClient.token();
       const token = jwtData?.token;
 
@@ -23,7 +22,6 @@ const CancelBookingButton = ({ bookingId }) => {
         return;
       }
 
-      // ✅ PATCH /bookings/:id/cancel
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/bookings/${bookingId}/cancel`,
         {
@@ -41,10 +39,9 @@ const CancelBookingButton = ({ bookingId }) => {
         return;
       }
 
-      // ✅ Success
       toast.success("Booking cancelled.");
-      setOpen(false);
-      router.refresh(); // server component re-fetch → list update
+      setIsOpen(false);
+      setTimeout(() => router.refresh(), 500);
     } catch {
       toast.error("Something went wrong. Please try again.");
     } finally {
@@ -53,44 +50,36 @@ const CancelBookingButton = ({ bookingId }) => {
   };
 
   return (
-    <AlertDialog open={open} onOpenChange={setOpen}>
-      {/* Trigger */}
+    <>
       <Button
         color="danger"
-        variant="light"
+        variant="flat"
         size="sm"
-        onPress={() => setOpen(true)}
+        className="font-bold"
+        onPress={() => setIsOpen(true)}
       >
         Cancel
       </Button>
 
-      {/* Modal */}
-      <AlertDialog.Backdrop>
-        <AlertDialog.Container>
-          <AlertDialog.Dialog className="sm:max-w-100">
-            <AlertDialog.CloseTrigger />
-            <AlertDialog.Header>
-              <AlertDialog.Icon status="danger" />
-              <AlertDialog.Heading>Cancel Booking?</AlertDialog.Heading>
-            </AlertDialog.Header>
-
-            <AlertDialog.Body>
-              <p className="text-slate-600">
-                Are you sure you want to cancel this booking? This action cannot
-                be undone.
-              </p>
-            </AlertDialog.Body>
-
-            <AlertDialog.Footer>
-              <Button
-                slot="close"
-                variant="tertiary"
-                onPress={() => setOpen(false)}
-              >
+      {/* ✅ Custom modal — HeroUI Modal ছাড়া */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+          onClick={(e) => e.target === e.currentTarget && setIsOpen(false)}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-sm mx-4 p-6 space-y-4">
+            <h2 className="text-lg font-black text-slate-900">
+              Cancel Booking?
+            </h2>
+            <p className="text-slate-600 text-sm">
+              Are you sure you want to cancel this booking? This action cannot
+              be undone.
+            </p>
+            <div className="flex gap-3 justify-end pt-2">
+              <Button variant="flat" onPress={() => setIsOpen(false)}>
                 Keep Booking
               </Button>
               <Button
-                slot="close"
                 color="danger"
                 className="font-bold"
                 onPress={handleCancel}
@@ -98,11 +87,11 @@ const CancelBookingButton = ({ bookingId }) => {
               >
                 Yes, Cancel
               </Button>
-            </AlertDialog.Footer>
-          </AlertDialog.Dialog>
-        </AlertDialog.Container>
-      </AlertDialog.Backdrop>
-    </AlertDialog>
+            </div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
 

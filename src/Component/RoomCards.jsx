@@ -1,5 +1,7 @@
+
+
 import { Button, Chip } from "@heroui/react";
-import { BookOpen, Clock } from "lucide-react";
+import { Users, DollarSign } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -12,13 +14,27 @@ const CourseCard = ({ course }) => {
     floor,
     seatCapacity,
     hourlyRate,
-    amenities,
+    amenities = [],
   } = course;
+
+  const shortDescription =
+    description?.length > 100 ? description.slice(0, 100) + "..." : description;
+
   return (
-    <div className="group flex flex-col bg-white rounded-4xl border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      <div className="relative overflow-hidden aspect-16/10">
+    <div className="group flex flex-col bg-white rounded-4xl border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
+      {/* Image */}
+      <div
+        style={{
+          borderTopLeftRadius: "1rem",
+          borderTopRightRadius: "1rem",
+          position: "relative",
+          height: "192px",
+          width: "100%",
+          overflow: "hidden",
+        }}
+      >
         <Image
-          alt="Course Image"
+          alt={name || "Room Image"}
           className="object-cover group-hover:scale-110 transition-transform duration-700"
           src={
             image ||
@@ -26,47 +42,63 @@ const CourseCard = ({ course }) => {
           }
           fill
         />
-        <div className="absolute top-4 right-4">
+        <div className="absolute top-3 right-3">
           <Chip
             color="primary"
             variant="solid"
+            size="sm"
             className="font-bold shadow-lg shadow-blue-600/20"
           >
             {floor}
           </Chip>
         </div>
       </div>
-      <div className="p-8 flex flex-col grow space-y-4">
-        <div className="space-y-2">
-          <Link href={`/all_rooms/${_id}`}>
-            <h3 className="text-xl font-bold leading-tight line-clamp-2 hover:text-blue-600 transition-colors">
-              {name}
-            </h3>
-          </Link>
-          <p className="text-sm text-slate-500 font-medium flex items-center gap-1">
-            By <span className="text-slate-900">{hourlyRate}</span>
-          </p>
-        </div>
 
-        <div className="flex items-center gap-4 text-xs text-slate-500 font-bold">
-          <span className="flex items-center gap-1">
-            <Clock className="w-3.5 h-3.5" /> {seatCapacity}
+      {/* Content */}
+      <div className="p-6 flex flex-col grow gap-3">
+        <Link href={`/all_rooms/${_id}`}>
+          <h3 className="text-lg font-bold leading-tight line-clamp-2 hover:text-blue-600 transition-colors">
+            {name}
+          </h3>
+        </Link>
+
+        <p className="text-sm text-slate-500 leading-relaxed">
+          {shortDescription || "No description available."}
+        </p>
+
+        <div className="flex items-center gap-4 text-sm text-slate-600">
+          <span className="flex items-center gap-1 font-semibold text-blue-600">
+            <DollarSign className="w-4 h-4" />
+            {hourlyRate ? `${hourlyRate}/hr` : "N/A"}
           </span>
           <span className="flex items-center gap-1">
-            <BookOpen className="w-3.5 h-3.5" /> 24 Lessons
+            <Users className="w-4 h-4 text-slate-400" />
+            {seatCapacity ? `${seatCapacity} people` : "N/A"}
           </span>
         </div>
 
-        <div className="pt-6 mt-auto border-t border-slate-100 flex justify-between items-center">
-          <span className="text-2xl font-black text-blue-600">
-            ${description}
-          </span>
+        {/* ✅ FIX: category variable বাদ, amenities সরাসরি use */}
+        {amenities.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {amenities.slice(0, 3).map((amenity) => (
+              <Chip key={amenity} size="sm" variant="flat" color="default">
+                {amenity}
+              </Chip>
+            ))}
+            {amenities.length > 3 && (
+              <Chip size="sm" variant="flat" color="default">
+                +{amenities.length - 3} more
+              </Chip>
+            )}
+          </div>
+        )}
 
-          <Link href={`/all_rooms/${_id}`}>
+        <div className="mt-auto pt-4 border-t border-slate-100">
+          <Link href={`/all_rooms/${_id}`} className="w-full">
             <Button
-              variant="flat"
               color="primary"
-              className="font-bold rounded-xl px-6"
+              variant="flat"
+              className="w-full font-bold rounded-xl"
             >
               View Details
             </Button>

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Link from "next/link";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import CancelEnrollButton from "@/Component/CancelBookingButton";
+import CancelBookingButton from "@/Component/CancelBookingButton";
 
 export default async function DashboardPage() {
   const { token } = await auth.api.getToken({
@@ -19,16 +19,7 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  // const res = await fetch(
-  //   `${process.env.NEXT_PUBLIC_API_URL}/add-room/${session?.user?.id}`,
-  //   {
-  //     headers: {
-  //       Authorization: `Bearer ${token}`,
-  //     },
-  //     cache: "no-store",
-  //   },
-  // );
-  // const enrollments = (await res.json()) || [];
+
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/add-room/${session?.user?.id}`,
@@ -47,7 +38,8 @@ export default async function DashboardPage() {
   let enrollments = [];
 
   try {
-    enrollments = JSON.parse(text);
+    const parsed = JSON.parse(text);
+    enrollments = Array.isArray(parsed) ? parsed : [];
   } catch (error) {
     console.log("JSON Parse Error");
   }
@@ -66,7 +58,7 @@ export default async function DashboardPage() {
             />
 
             <h2 className="text-xl font-bold mt-4">{session?.user?.name}</h2>
-            <p className="text-sm text-slate-500">{session?.user?.floor}</p>
+            <p className="text-sm text-slate-500">{session?.user?.email}</p>
           </div>
         </div>
 
@@ -89,25 +81,49 @@ export default async function DashboardPage() {
                   className="flex gap-4 p-4 bg-white border rounded-xl"
                 >
                   <Image
-                    src={enrollment?.image}
-                    alt="course"
+                    src={
+                      enrollment?.roomImage ||
+                      "https://images.unsplash.com/photo-1497366858526-0766cadbe8fa?w=400"
+                    }
+                    alt="room"
                     width={120}
                     height={90}
-                    className="rounded-lg"
+                    className="rounded-lg object-cover"
                   />
-
                   <div className="flex flex-col grow justify-between">
                     <div>
-                      <h3 className="font-bold">{enrollment?.name}</h3>
-                      <p className="text-sm text-slate-500">date</p>
+                      <h3 className="font-bold">{enrollment?.roomName}</h3>
+                      <p className="text-sm text-slate-500">
+                        {enrollment?.bookingDate
+                          ? new Date(enrollment.bookingDate).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              },
+                            )
+                          : "Date not set"}
+                      </p>
                     </div>
-
                     <div className="flex justify-between items-center">
-                      <Chip color="success" size="sm">
-                        Active
+                      <Chip
+                        color={
+                          enrollment?.status === "cancelled"
+                            ? "danger"
+                            : "success"
+                        }
+                        size="sm"
+                      >
+                        {enrollment?.status === "cancelled"
+                          ? "Cancelled"
+                          : "Active"}
                       </Chip>
-
-                      <CancelEnrollButton enrolmentId={enrollment?._id} />
+                      {enrollment?.status !== "cancelled" && (
+                        <CancelBookingButton
+                          bookingId={enrollment?._id?.toString()}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
