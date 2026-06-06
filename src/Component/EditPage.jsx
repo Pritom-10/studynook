@@ -38,7 +38,7 @@ export default async function EditPage({ rooms }) {
             <BookPlus className="w-8 h-8" />
           </div>
           <h1 className="text-4xl font-black text-slate-900">
-            Edit {/* ✅ FIX: bg-gradient-to-r */}
+            Edit 
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-blue-800">
               Room
             </span>
@@ -72,7 +72,7 @@ export default async function EditPage({ rooms }) {
               >
                 Description
               </label>
-              {/* ✅ FIX: Textarea (lowercase a) */}
+              
               <TextArea
                 defaultValue={description}
                 id="description"
@@ -90,7 +90,7 @@ export default async function EditPage({ rooms }) {
               >
                 Image URL
               </label>
-              {/* ✅ FIX: startContent সরানো হয়েছে */}
+              
               <Input
                 defaultValue={image}
                 id="image"
@@ -126,7 +126,7 @@ export default async function EditPage({ rooms }) {
               >
                 Hourly Rate ($)
               </label>
-              {/* ✅ FIX: startContent সরানো হয়েছে */}
+              
               <Input
                 defaultValue={hourlyRate}
                 id="price"
@@ -145,7 +145,7 @@ export default async function EditPage({ rooms }) {
               >
                 Seat Capacity
               </label>
-              {/* ✅ FIX: startContent সরানো হয়েছে */}
+             
               <Input
                 defaultValue={seatCapacity}
                 id="Capacity"
