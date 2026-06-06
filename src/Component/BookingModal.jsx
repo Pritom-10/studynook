@@ -22,7 +22,7 @@ const TIME_SLOTS = [
   "20:00",
 ];
 
-// hourlyRate string থেকে number বের করে — "$10/hr" → 10
+
 const parseRate = (rate) => {
   if (!rate) return 0;
   const num = parseFloat(String(rate).replace(/[^0-9.]/g, ""));
@@ -43,14 +43,14 @@ export default function BookingModal({ course, onClose }) {
 
   const hourlyRate = parseRate(course?.hourlyRate || course?.price);
 
-  // endTime options — startTime এর পরের slots
+
   const endTimeOptions = useMemo(() => {
     if (!startTime) return [];
     const startIndex = TIME_SLOTS.indexOf(startTime);
     return TIME_SLOTS.slice(startIndex + 1);
   }, [startTime]);
 
-  // Total cost real-time calculate
+
   const totalCost = useMemo(() => {
     if (!startTime || !endTime) return 0;
     const startHour = parseInt(startTime.split(":")[0]);
@@ -105,7 +105,7 @@ export default function BookingModal({ course, onClose }) {
       const data = await res.json();
 
       if (!res.ok) {
-        // conflict বা অন্য error
+        
         toast.error(data?.message || "Booking failed.");
         setLoading(false);
         return;
@@ -123,19 +123,19 @@ export default function BookingModal({ course, onClose }) {
   };
 
   return (
-    // Backdrop
+    
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 space-y-6">
-        {/* Header */}
+      
         <div className="space-y-1">
           <h2 className="text-2xl font-black text-slate-900">Book a Room</h2>
           <p className="text-slate-500 font-medium">{course?.name}</p>
         </div>
 
-        {/* Date */}
+       
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">
             Date <span className="text-red-500">*</span>
@@ -149,7 +149,7 @@ export default function BookingModal({ course, onClose }) {
           />
         </div>
 
-        {/* Start Time */}
+      
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">
             Start Time <span className="text-red-500">*</span>
@@ -158,7 +158,7 @@ export default function BookingModal({ course, onClose }) {
             value={startTime}
             onChange={(e) => {
               setStartTime(e.target.value);
-              setEndTime(""); // reset end time
+              setEndTime(""); 
             }}
             className="w-full h-12 px-4 border-2 border-slate-200 hover:border-blue-400 focus:border-blue-600 rounded-2xl outline-none transition-all text-slate-700 font-medium bg-white"
           >
@@ -171,7 +171,7 @@ export default function BookingModal({ course, onClose }) {
           </select>
         </div>
 
-        {/* End Time */}
+      
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">
             End Time <span className="text-red-500">*</span>
@@ -191,7 +191,7 @@ export default function BookingModal({ course, onClose }) {
           </select>
         </div>
 
-        {/* Total Cost */}
+       
         {totalCost > 0 && (
           <div className="bg-blue-50 border border-blue-200 rounded-2xl px-5 py-4 flex justify-between items-center">
             <span className="text-slate-600 font-bold">Total Cost</span>
@@ -201,7 +201,7 @@ export default function BookingModal({ course, onClose }) {
           </div>
         )}
 
-        {/* Special Note */}
+      
         <div className="space-y-2">
           <label className="text-sm font-bold text-slate-700">
             Special Note{" "}
@@ -216,7 +216,7 @@ export default function BookingModal({ course, onClose }) {
           />
         </div>
 
-        {/* Buttons */}
+        
         <div className="flex gap-3 pt-2">
           <Button
             variant="flat"

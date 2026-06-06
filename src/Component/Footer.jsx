@@ -1,4 +1,4 @@
-// components/Footer.jsx
+
 import Link from "next/link";
 import { Mail, Phone, MapPin } from "lucide-react";
 import Logo from "./Logo";
@@ -92,7 +92,7 @@ const Footer = () => {
       {/* Main Footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-12">
-          {/* Brand */}
+         
           <div className="space-y-5">
             <Logo dark />
 
@@ -169,7 +169,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-blue-400 mt-0.5 shrink-0" />
 
-                <span className="text-sm leading-relaxed break-words">
+                <span className="text-sm leading-relaxed wrap-break-word">
                   123 Study Lane, Academic Block,
                   <br />
                   Chattagram, Bangladesh
@@ -202,7 +202,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Bar */}
+     
       <div className="border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500 text-center md:text-left">
