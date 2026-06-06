@@ -1,4 +1,4 @@
-// components/Logo.jsx — যেকোনো জায়গায় reuse করতে পারবে
+
 import Link from "next/link";
 import { BookOpen } from "lucide-react";
 

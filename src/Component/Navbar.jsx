@@ -38,7 +38,7 @@ export function MainNavbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
 
-          {/* Logo */}
+         
           <div className="flex items-center">
             <Logo />
           </div>
@@ -66,7 +66,7 @@ export function MainNavbar() {
             )}
           </div>
 
-          {/* Desktop right side */}
+          
           <div className="hidden md:flex items-center gap-4">
             {isPending ? (
               <div className="w-20 h-9 bg-slate-100 rounded-full animate-pulse" />
@@ -99,7 +99,7 @@ export function MainNavbar() {
                   </div>
                 </button>
 
-                {/* Dropdown */}
+               
                 <div className="absolute right-0 top-12 w-56 bg-white border border-slate-200 rounded-2xl shadow-2xl hidden group-hover:flex flex-col py-2 z-50">
                   <div className="px-4 py-3 border-b border-slate-100">
                     <p className="font-bold text-sm">{session?.user?.name}</p>
@@ -122,7 +122,7 @@ export function MainNavbar() {
             )}
           </div>
 
-          {/* Mobile hamburger */}
+          
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -135,7 +135,7 @@ export function MainNavbar() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+     
       {isMenuOpen && (
         <div className="md:hidden px-4 pt-2 pb-6 space-y-2 bg-white border-b border-slate-200 animate-in slide-in-from-top duration-300">
           <Link href="/" className="block px-4 py-3 text-base font-medium text-slate-900 hover:bg-slate-50 rounded-xl">
