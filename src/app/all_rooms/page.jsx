@@ -51,8 +51,6 @@ const AllRoomPage = async ({ searchParams }) => {
                     <RoomCards key={course._id} course={course} />
                   ))}
                 </div>
-
-                {/* Pagination */}
                 <Pagination currentPage={page} totalPages={totalPages} />
               </>
             )}

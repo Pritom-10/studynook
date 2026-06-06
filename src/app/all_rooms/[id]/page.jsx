@@ -89,7 +89,7 @@ export default async function CourseDetails({ params }) {
             </p>
           </div>
 
-          {/* Info chips */}
+          
           <div className="flex flex-wrap gap-4 pt-8 border-t border-slate-200">
             {featuredItems.map((item, i) => (
               <div
@@ -117,7 +117,7 @@ export default async function CourseDetails({ params }) {
           )}
         </div>
 
-        {/* Right sidebar */}
+        
         <div className="lg:col-span-1">
           <div className="sticky top-24 bg-white/70 backdrop-blur-md p-8 rounded-[2rem] border border-white/20 shadow-2xl space-y-6">
             <div className="space-y-2">
