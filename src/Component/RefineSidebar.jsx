@@ -26,7 +26,7 @@ const RefineSidebar = () => {
   const [minPrice, setMinPrice] = useState(searchParams.get("minPrice") || "");
   const [maxPrice, setMaxPrice] = useState(searchParams.get("maxPrice") || "");
 
-  // ✅ search real-time
+
   const handleSearchChange = (e) => {
     const value = e.target.value;
     setSearch(value);
@@ -39,7 +39,7 @@ const RefineSidebar = () => {
     router.push(`/all_rooms?${params.toString()}`);
   };
 
-  // ✅ amenities real-time
+
   const toggleAmenity = (amenity) => {
     const updated = selectedAmenities.includes(amenity)
       ? selectedAmenities.filter((a) => a !== amenity)
@@ -54,7 +54,7 @@ const RefineSidebar = () => {
     router.push(`/all_rooms?${params.toString()}`);
   };
 
-  // ✅ price real-time
+
   const handlePriceChange = (key, value) => {
     const params = new URLSearchParams(searchParams.toString());
     if (key === "min") {
@@ -90,7 +90,7 @@ const RefineSidebar = () => {
         </button>
       </div>
 
-      {/* Search */}
+     
       <div className="space-y-2">
         <label className="text-sm font-semibold text-slate-700">
           Search by name
@@ -119,7 +119,7 @@ const RefineSidebar = () => {
         </div>
       </div>
 
-      {/* Amenities */}
+      
       <div className="space-y-3">
         <label className="text-sm font-semibold text-slate-700">
           Amenities
@@ -144,7 +144,7 @@ const RefineSidebar = () => {
         </div>
       </div>
 
-      {/* ✅ Hourly rate ফিরিয়ে আনা হয়েছে */}
+     
       <div className="space-y-2">
         <label className="text-sm font-semibold text-slate-700">
           Hourly rate ($)

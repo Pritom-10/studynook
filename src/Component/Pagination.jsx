@@ -22,7 +22,7 @@ export default function Pagination({ currentPage, totalPages }) {
         ‹
       </button>
 
-      {/* Page Numbers */}
+      
       {Array.from({ length: totalPages }).map((_, i) => {
         const page = i + 1;
         return (
@@ -41,7 +41,7 @@ export default function Pagination({ currentPage, totalPages }) {
         );
       })}
 
-      {/* Next */}
+     
       <button
         onClick={() => goTo(currentPage + 1)}
         disabled={currentPage === totalPages}
