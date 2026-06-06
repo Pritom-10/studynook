@@ -114,7 +114,7 @@ const Footer = () => {
               ))}
             </div>
 
-            {/* Newsletter */}
+            
             <div className="pt-3">
               <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">
                 Newsletter
@@ -134,7 +134,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          
           <div className="space-y-5">
             <h4 className="text-sm font-semibold text-white uppercase tracking-widest">
               Quick Links
@@ -159,7 +159,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
+        
           <div className="space-y-5">
             <h4 className="text-sm font-semibold text-white uppercase tracking-widest">
               Contact Us
