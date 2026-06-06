@@ -62,19 +62,19 @@ const HowItWorks = () => {
             key={s.step}
             className="flex flex-col items-center text-center relative"
           >
-            {/* Connector line */}
+            
             {i < steps.length - 1 && (
               <div className="hidden md:block absolute top-8 left-[calc(50%+2rem)] right-[calc(-50%+2rem)] h-px bg-slate-200" />
             )}
 
-            {/* Icon circle */}
+           
             <div
               className={`w-16 h-16 rounded-full ${s.bg} border border-slate-200 flex items-center justify-center mb-6`}
             >
               <s.icon className={`w-5 h-5 ${s.iconColor}`} />
             </div>
 
-            {/* Step badge */}
+           
             <span
               className={`text-xs font-semibold tracking-widest uppercase ${s.badgeBg} px-3 py-1 rounded-full mb-3`}
             >
@@ -84,14 +84,14 @@ const HowItWorks = () => {
             <h3 className="text-base font-semibold text-slate-800 mb-2">
               {s.title}
             </h3>
-            <p className="text-sm text-slate-500 leading-relaxed max-w-[220px]">
+            <p className="text-sm text-slate-500 leading-relaxed max-w-55">
               {s.description}
             </p>
           </div>
         ))}
       </div>
 
-      {/* CTA */}
+   
       <div className="text-center mt-12">
         <Link href="/all_rooms">
           <Button color="primary" className="px-8 font-semibold rounded-xl">
