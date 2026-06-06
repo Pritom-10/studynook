@@ -6,10 +6,10 @@ import { Mail, Lock, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { authClient, signIn } from "@/lib/auth-client";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation"; // ✅ FIX: import যোগ
+import { useRouter } from "next/navigation"; 
 
 export default function Login() {
-  const router = useRouter(); // ✅ FIX: initialize
+  const router = useRouter();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -22,12 +22,12 @@ export default function Login() {
     });
 
     if (error) {
-      toast.error("Login failed. Check your email and password."); // ✅ FIX
+      toast.error("Login failed. Check your email and password.");
       return;
     }
 
     toast.success("Welcome back!");
-    router.push("/"); // ✅ FIX: redirect
+    router.push("/"); 
   };
 
   const handleGoogleLogin = async () => {
@@ -132,14 +132,14 @@ export default function Login() {
                 type="submit"
                 className="w-full h-14 text-lg font-black rounded-2xl shadow-xl shadow-blue-600/20 group"
               >
-                Sign In{" "}
+                Sign In
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </form>
 
             <div className="text-center pt-2">
               <p className="text-sm text-slate-500 font-medium">
-                New to StudyHook?{" "}
+                New to StudyHook?
                 <Link
                   href="/register"
                   className="text-blue-600 font-black hover:underline underline-offset-4 transition-all"
