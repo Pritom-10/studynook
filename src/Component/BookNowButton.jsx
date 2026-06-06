@@ -50,7 +50,7 @@ export default function BookNowButton({ course }) {
           </>
         )}
 
-        {/* Edit & Delete — শুধু owner দেখবে */}
+       
         {isOwner && (
           <div className="space-y-3">
             <p className="text-xs text-center font-bold text-slate-400 uppercase tracking-widest">
@@ -75,7 +75,7 @@ export default function BookNowButton({ course }) {
   );
 }
 
-// ✅ Delete button আলাদা রাখলাম
+
 function DeleteButton({ courseId }) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();

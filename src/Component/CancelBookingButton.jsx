@@ -61,7 +61,7 @@ const CancelBookingButton = ({ bookingId }) => {
         Cancel
       </Button>
 
-      {/* ✅ Custom modal — HeroUI Modal ছাড়া */}
+  
       {isOpen && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/50"
