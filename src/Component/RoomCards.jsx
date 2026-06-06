@@ -22,7 +22,7 @@ const CourseCard = ({ course }) => {
 
   return (
     <div className="group flex flex-col bg-white rounded-4xl border border-slate-200 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-      {/* Image */}
+     
       <div
         style={{
           borderTopLeftRadius: "1rem",
@@ -54,7 +54,6 @@ const CourseCard = ({ course }) => {
         </div>
       </div>
 
-      {/* Content */}
       <div className="p-6 flex flex-col grow gap-3">
         <Link href={`/all_rooms/${_id}`}>
           <h3 className="text-lg font-bold leading-tight line-clamp-2 hover:text-blue-600 transition-colors">
@@ -77,7 +76,7 @@ const CourseCard = ({ course }) => {
           </span>
         </div>
 
-        {/* ✅ FIX: category variable বাদ, amenities সরাসরি use */}
+    
         {amenities.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {amenities.slice(0, 3).map((amenity) => (

@@ -42,7 +42,7 @@ const WhyStudyNook = () => {
 
   return (
     <section className="py-20 px-4 max-w-6xl mx-auto">
-      {/* Header */}
+    
       <div className="text-center mb-14">
         <span className="inline-block text-xs font-semibold tracking-widest uppercase text-blue-600 bg-blue-50 px-4 py-1.5 rounded-full mb-5">
           Why StudyNook
@@ -57,7 +57,7 @@ const WhyStudyNook = () => {
         </p>
       </div>
 
-      {/* Cards */}
+     
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {features.map((f) => (
           <div
