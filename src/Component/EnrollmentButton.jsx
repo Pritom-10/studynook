@@ -22,9 +22,9 @@ export default function EnrollmentButton({ course }) {
       userId: session?.user?.id,
       studentName: session?.user?.name,
       studentEmail: session?.user?.email,
-      roomId: course?._id, // ✅ delete এর জন্য
-      name: course?.name, // ✅ yourrooms এ দেখাবে
-      image: course?.image, // ✅ yourrooms এ দেখাবে
+      roomId: course?._id, 
+      name: course?.name, 
+      image: course?.image, 
       floor: course?.floor,
       price: course?.price,
     };
@@ -41,12 +41,7 @@ export default function EnrollmentButton({ course }) {
       },
     );
 
-    // const data = await res.json();
-    // if (!data) {
-    //   toast.error("Something went wrong");
-    //   return;
-    // }
-    // router.push("/yourrooms");
+   
 
     const text = await res.text();
 

@@ -21,31 +21,7 @@ const FeaturedCard = ({ course }) => {
  
   return (
     <div className="group flex flex-col bg-white rounded-4xl border border-slate-200  transition-all duration-300 hover:-translate-y-1 hover:shadow-xl h-full">
-      {/* <div
-        className="overflow-hidden h-48 w-full"
-        style={{ position: "relative" }}
-      >
-        <Image
-          src={
-            image ||
-            "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600"
-          }
-          alt="Course Image"
-          fill
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-          className="object-cover group-hover:scale-110 transition-transform duration-700"
-        />
-        <div className="absolute top-3 right-3">
-          <Chip
-            color="primary"
-            variant="solid"
-            size="sm"
-            className="font-bold shadow-lg shadow-blue-600/20"
-          >
-            {floor}
-          </Chip>
-        </div>
-      </div> */}
+   
       <div
         style={{
           borderTopLeftRadius: "1rem",
@@ -101,7 +77,7 @@ const FeaturedCard = ({ course }) => {
           </span>
         </div>
 
-        {/* ✅ FIX: category variable বাদ, amenities সরাসরি use */}
+       
         {amenities.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {amenities.slice(0, 3).map((amenity) => (
