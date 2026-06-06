@@ -9,7 +9,7 @@ import { signUp, authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-// ✅ Password validation function
+
 function validatePassword(password) {
   const errors = [];
   if (password.length < 6) errors.push("At least 6 characters");
@@ -40,7 +40,7 @@ export default function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    // ✅ Submit এর আগে validate করো
+
     const errors = validatePassword(password);
     if (errors.length > 0) {
       setTouched(true);
@@ -188,14 +188,14 @@ export default function Register() {
                   value={password}
                   onChange={handlePasswordChange}
                   onBlur={handlePasswordBlur}
-                  // ✅ error থাকলে red border
+                
                   className={`border-2 ${
                     touched && passwordErrors.length > 0
                       ? "border-red-400 focus-within:border-red-500"
                       : "border-slate-200 hover:border-blue-600/50 focus-within:border-blue-600"
                   } transition-all duration-300 h-14 bg-white w-full rounded-2xl`}
                 />
-                {/* ✅ Inline error messages */}
+             
                 {touched && passwordErrors.length > 0 && (
                   <ul className="space-y-1 mt-1">
                     {passwordErrors.map((err, i) => (
@@ -208,7 +208,7 @@ export default function Register() {
                     ))}
                   </ul>
                 )}
-                {/* ✅ সব ঠিক থাকলে green message */}
+               
                 {touched &&
                   passwordErrors.length === 0 &&
                   password.length > 0 && (
@@ -223,14 +223,14 @@ export default function Register() {
                 type="submit"
                 className="w-full h-14 text-lg font-black rounded-2xl shadow-xl shadow-blue-600/20 group"
               >
-                Create Account{" "}
+                Create Account
                 <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </form>
 
             <div className="text-center pt-2">
               <p className="text-sm text-slate-500 font-medium">
-                Already have an account?{" "}
+                Already have an account?
                 <Link
                   href="/login"
                   className="text-blue-600 font-black hover:underline underline-offset-4 transition-all"
