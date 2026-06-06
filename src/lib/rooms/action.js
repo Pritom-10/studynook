@@ -46,7 +46,7 @@ export const addCourse = async (formData) => {
   return data;
 };
 
-// ✅ NEW: updateCourse action
+
 export const updateCourse = async (roomId, formData) => {
   const { token } = await auth.api.getToken({
     headers: await headers(),
