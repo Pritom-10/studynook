@@ -1,11 +1,14 @@
 import Addproducts from "@/Component/Addproducts";
 import React from "react";
+import PrivateRoute from "@/Component/PrivateRoute";
 
 const Addroom = () => {
   return (
-    <div>
-      <Addproducts />
-    </div>
+    <PrivateRoute>
+      <div>
+        <Addproducts />
+      </div>
+    </PrivateRoute>
   );
 };
 
