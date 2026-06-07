@@ -197,9 +197,9 @@ export default function Login() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    toast.error("Google login coming soon!");
-  };
+const handleGoogleLogin = () => {
+  window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+};
 
   return (
     <div className="min-h-[80vh] flex flex-col bg-slate-50 dark:bg-slate-950">
@@ -292,7 +292,7 @@ export default function Login() {
 
             <div className="text-center pt-2">
               <p className="text-sm text-slate-500 dark:text-slate-400 font-medium">
-                New to StudyHook?{" "}
+                New to StudyHook?
                 <Link
                   href="/register"
                   className="text-blue-600 font-black hover:underline underline-offset-4 transition-all"

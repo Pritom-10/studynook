@@ -474,9 +474,9 @@ export default function Register() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    toast.error("Google login coming soon!");
-  };
+ const handleGoogleLogin = () => {
+   window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/auth/google`;
+ };
 
   return (
     <div className="min-h-[80vh] flex flex-col bg-slate-50 dark:bg-slate-950 py-12">
