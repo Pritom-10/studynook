@@ -1,28 +1,23 @@
-
 "use client";
-
 import { Button } from "@heroui/react";
 import { Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-const DeleteRoomButton = ({ roomId, token }) => {
+const DeleteRoomButton = ({ roomId }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this room?")) return;
-
     setLoading(true);
     try {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/all_rooms/${roomId}`,
         {
           method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: "include", // ← cookie পাঠাবে
         },
       );
 

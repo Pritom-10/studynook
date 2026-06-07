@@ -1,18 +1,15 @@
-
-
-
 import EditPage from "@/Component/EditPage";
 import { getRoom } from "@/lib/rooms/data";
-import { headers } from "next/headers";
-import { auth } from "@/lib/auth";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const Editpager = async ({ params }) => {
   const { id } = await params;
 
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
 
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
-  });
+  if (!token) redirect("/login");
 
   const rooms = await getRoom(id, token);
 
