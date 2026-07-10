@@ -11,7 +11,7 @@ export default async function DashboardPage() {
 
   if (!token) redirect("/login");
 
-  // user info নিন
+
   const meRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",
@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const user = await meRes.json();
   const userId = user?._id?.toString();
 
-  // bookings নিন
+
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/bookings/${userId}`,
     {

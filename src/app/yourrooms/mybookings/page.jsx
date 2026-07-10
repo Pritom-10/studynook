@@ -1,11 +1,8 @@
-
-
 import Image from "next/image";
 import { Chip, Button } from "@heroui/react";
 import { redirect } from "next/navigation";
 import Link from "next/link";
-import { auth } from "@/lib/auth";
-import { headers } from "next/headers";
+import { cookies } from "next/headers";
 import CancelBookingButton from "@/Component/CancelBookingButton";
 
 function isFutureDate(dateStr) {
@@ -16,7 +13,6 @@ function isFutureDate(dateStr) {
   return bookingDate >= today;
 }
 
-// ✅ FIX: date সঠিকভাবে format করা
 function formatDate(dateStr) {
   if (!dateStr) return "Date not set";
   try {
@@ -32,42 +28,37 @@ function formatDate(dateStr) {
 }
 
 export default async function MyBookingsPage() {
-  const { token } = await auth.api.getToken({
-    headers: await headers(),
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+
+  if (!token) redirect("/login");
+
+  const meRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
+    headers: { Cookie: `token=${token}` },
+    cache: "no-store",
   });
 
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  if (!meRes.ok) redirect("/login");
 
-  if (!session?.user || !token) {
-    redirect("/login");
-  }
+  const user = await meRes.json();
+  const userId = user?._id?.toString();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/bookings/${session?.user?.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/bookings/${userId}`,
     {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Cookie: `token=${token}` },
       cache: "no-store",
     },
   );
-  console.log("Status:", res.status);
-  const text = await res.text();
-  console.log("Raw response:", text);
 
   let bookings = [];
   try {
     const parsed = await res.json();
     bookings = Array.isArray(parsed)
-      ? parsed.map((b) => ({
-          ...b,
-          _id: b._id?.toString() || b._id,
-        }))
+      ? parsed.map((b) => ({ ...b, _id: b._id?.toString() || b._id }))
       : [];
   } catch {
-    console.error("Bookings JSON parse error");
+    bookings = [];
   }
 
   return (
@@ -76,17 +67,18 @@ export default async function MyBookingsPage() {
         {/* Sidebar */}
         <div className="w-full md:w-1/4">
           <div className="p-6 bg-white border rounded-2xl">
-            {session?.user?.image && (
-              <Image
-                src={session.user.image}
-                alt="profile"
-                width={96}
-                height={96}
-                className="w-24 h-24 rounded-full object-cover"
-              />
-            )}
-            <h2 className="text-xl font-bold mt-4">{session?.user?.name}</h2>
-            <p className="text-sm text-slate-500">{session?.user?.email}</p>
+            <Image
+              src={
+                user?.photoURL ||
+                "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?q=80&w=400"
+              }
+              alt="profile"
+              width={96}
+              height={96}
+              className="w-24 h-24 rounded-full object-cover"
+            />
+            <h2 className="text-xl font-bold mt-4">{user?.name}</h2>
+            <p className="text-sm text-slate-500">{user?.email}</p>
           </div>
         </div>
 
@@ -113,7 +105,6 @@ export default async function MyBookingsPage() {
                     key={booking?._id}
                     className="flex gap-4 p-4 bg-white border rounded-xl items-start"
                   >
-                    {/* Room Image */}
                     <div className="relative w-28 h-20 rounded-lg overflow-hidden shrink-0">
                       <Image
                         src={
@@ -131,20 +122,15 @@ export default async function MyBookingsPage() {
                         <h3 className="font-bold text-lg">
                           {booking?.roomName || "Unknown Room"}
                         </h3>
-
-                        {/* ✅ FIX: date সঠিকভাবে দেখাচ্ছে */}
                         <p className="text-sm text-slate-500 mt-1">
                           📅 {formatDate(booking?.bookingDate)}
                         </p>
-
                         <p className="text-sm text-slate-500">
                           🕐 {booking?.startTime} — {booking?.endTime}
                         </p>
-
                         <p className="text-sm font-semibold text-blue-600 mt-1">
                           💰 Total: ${booking?.totalCost}
                         </p>
-
                         {booking?.specialNote && (
                           <p className="text-xs text-slate-400 mt-1 italic">
                             Note: {booking.specialNote}
@@ -153,7 +139,6 @@ export default async function MyBookingsPage() {
                       </div>
 
                       <div className="flex justify-between items-center">
-                        {/* ✅ FIX: status সঠিকভাবে দেখাচ্ছে */}
                         <Chip
                           color={
                             booking?.status === "cancelled"
@@ -167,8 +152,6 @@ export default async function MyBookingsPage() {
                             ? "Cancelled"
                             : "Confirmed"}
                         </Chip>
-
-                        {/* ✅ FIX: শুধু confirmed + future booking এ Cancel button */}
                         {canCancel && (
                           <CancelBookingButton
                             bookingId={booking?._id?.toString()}
