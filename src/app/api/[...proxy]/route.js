@@ -14,7 +14,6 @@ export async function POST(req, { params }) {
   const data = await res.text();
   const response = new Response(data, { status: res.status });
 
-  // ✅ Backend এর cookie frontend এ forward করো
   const setCookie = res.headers.get("set-cookie");
   if (setCookie) {
     response.headers.set("set-cookie", setCookie);
