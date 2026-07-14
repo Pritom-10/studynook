@@ -64,7 +64,7 @@ StudyNook lets students and library staff list private study rooms they manage, 
 
 | Home | Room Details | My Bookings |
 |---|---|---|
-| ![Home](./public/screenshots/home.png) | ![Home](./public/screenshots/booking.png) |![Home](./public/screenshots/rooms.png) |
+| <img src="public/screenshot/home.png" alt="Home" height="400"> | ![Home](./public/screenshots/booking.png) |![Home](./public/screenshots/rooms.png) |
 
 ---
 
