@@ -7,7 +7,7 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Page reload এ user ধরে রাখবে
+
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
       credentials: "include",

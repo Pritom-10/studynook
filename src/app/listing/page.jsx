@@ -14,7 +14,7 @@ const Listing = async () => {
     redirect("/login");
   }
 
-  // user info নিন
+
   const meRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/me`, {
     headers: { Cookie: `token=${token}` },
     cache: "no-store",

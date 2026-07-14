@@ -4,12 +4,12 @@ import { ArrowRight, Star, Play, MapPin, BookOpen, Zap } from "lucide-react";
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-// Import Swiper styles
+
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-// import required modules
+
 import { Pagination, Navigation } from "swiper/modules";
 import Link from "next/link";
 
@@ -42,18 +42,19 @@ const Hero = () => {
                   learn faster and stay consistent.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                  <Button
-                    href="/all_rooms"
-                    color="primary"
-                    size="lg"
-                    className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 group"
-                  >
-                    Explore Rooms
-                    <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="/all_rooms">
+                    <Button
+                      href="/all_rooms"
+                      color="primary"
+                      size="lg"
+                      className="h-14 px-10 text-lg font-bold rounded-full shadow-2xl shadow-blue-600/30 group"
+                    >
+                      Explore Rooms
+                      <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </div>
 
-                {/* Stats row — নতুন যোগ করা */}
                 <div className="flex items-center gap-8 pt-2">
                   {[
                     { value: "10K+", label: "Students" },
@@ -165,7 +166,7 @@ const Hero = () => {
                     fill
                     className="rounded-[2rem] object-cover transform transition duration-700 group-hover:scale-105"
                   />
-                  {/* Floating booking card */}
+
                   <div className="absolute bottom-8 left-8 right-8 bg-white/70 backdrop-blur-md p-5 rounded-2xl border border-white/30 shadow-2xl">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-3">
