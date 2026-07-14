@@ -17,7 +17,7 @@ export async function POST(req) {
     return NextResponse.json(data, { status: res.status });
   }
 
-  // ✅ Next.js নিজে cookie set করবে — same domain
+
   const response = NextResponse.json(data);
   response.cookies.set("token", data.token, {
     httpOnly: true,
