@@ -97,7 +97,7 @@ Visit `http://localhost:3000` to view it locally.
 Create a `.env.local` file in the project root:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:8000
+NEXT_PUBLIC_API_URL=http://localhost:8080
 ```
 
 > ⚠️ The server has its own `.env` (MongoDB URI, JWT secret, frontend URL for JWKS, etc.) — never commit real values to source control.
