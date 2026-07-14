@@ -115,7 +115,7 @@ const Footer = () => {
             </div>
 
             
-            <div className="pt-3">
+            {/* <div className="pt-3">
               <p className="text-xs font-semibold text-white uppercase tracking-widest mb-3">
                 Newsletter
               </p>
@@ -131,7 +131,7 @@ const Footer = () => {
                   Join
                 </button>
               </div>
-            </div>
+            </div> */}
           </div>
 
           
